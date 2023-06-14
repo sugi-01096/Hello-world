@@ -49,7 +49,6 @@ def main():
         
         # ...
 
-# ...
 import Levenshtein
 from gensim.models import KeyedVectors
 
@@ -101,7 +100,7 @@ def main():
         # ...
 
 # ...
-mport streamlit as st
+import streamlit as st
 
 # 禁止ワードのリスト
 banned_words = ["馬鹿", "禁止ワード2", "禁止ワード3"]
