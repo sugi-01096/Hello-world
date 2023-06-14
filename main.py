@@ -50,7 +50,7 @@ def main():
         # ...
 
 # ...
-iimport Levenshtein
+import Levenshtein
 from gensim.models import KeyedVectors
 
 # 禁止ワードのリスト
