@@ -1,7 +1,7 @@
 import streamlit as st
 
 # 禁止ワードのリスト
-banned_words = ["禁止ワード1", "禁止ワード2", "禁止ワード3"]
+banned_words = ["馬鹿", "禁止ワード2", "禁止ワード3"]
 
 # ユーザーの投稿内容をチェックする関数
 def check_post_content(post_content):
