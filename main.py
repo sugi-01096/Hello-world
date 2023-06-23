@@ -2,6 +2,7 @@ import streamlit as st
 import json
 from datetime import datetime
 import pytz
+import urllib.parse
 
 # 禁止ワードのリスト
 banned_words = ["馬鹿", "禁止ワード2", "禁止ワード3"]
@@ -52,9 +53,10 @@ def main():
         st.info("まだ投稿がありません。")
     else:
         for post in posts:
-            st.text(post["title"])
-            st.text(post["content"])
-            st.text("投稿時刻: " + post.get("timestamp", ""))
+            # 各タイトルにリンクを付けて表示
+            post_url = f"[{post['title']}](#{urllib.parse.quote(post['title'])})"
+            st.markdown(post_url, unsafe_allow_html=True)
+            st.write(post['content'])
             st.markdown("---")
 
 if __name__ == "__main__":
