@@ -18,8 +18,9 @@ def check_post_content(title, content):
     return title, content
 
 def save_post(title, content):
-    now = datetime.now(pytz.timezone("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S")
-    post = {"title": title, "content": content, "timestamp": now}
+    now = datetime.now(pytz.timezone("Asia/Tokyo"))
+    now_str = now.strftime("%Y-%m-%d %H:%M:%S")
+    post = {"title": title, "content": content, "timestamp": now_str}
     with open('posts.json', 'a') as file:
         file.write(json.dumps(post))
         file.write('\n')
@@ -28,11 +29,12 @@ def load_posts():
     with open('posts.json', 'r') as file:
         lines = file.readlines()
         posts = [json.loads(line.strip()) for line in lines]
-
+        
         # タイムスタンプを日本時間に変換
         for post in posts:
             timestamp = datetime.strptime(post['timestamp'], "%Y-%m-%d %H:%M:%S")
-            post['timestamp'] = timestamp.astimezone(pytz.timezone("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S")
+            timestamp = pytz.timezone("Asia/Tokyo").localize(timestamp)
+            post['timestamp'] = timestamp.strftime("%Y-%m-%d %H:%M:%S")
 
         return posts
 
