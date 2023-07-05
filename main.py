@@ -27,7 +27,7 @@ def save_post(title, content):
 def load_posts():
     with open('posts.json', 'r') as file:
         lines = file.readlines()
-        posts = [json.loads(line) for line in lines]
+        posts = [json.loads(line.strip()) for line in lines]
 
         # タイムスタンプを日本時間に変換
         for post in posts:
