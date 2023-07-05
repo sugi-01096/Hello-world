@@ -27,15 +27,22 @@ def save_post(title, content):
 def load_posts():
     with open('posts.json', 'r') as file:
         lines = file.readlines()
-        return [json.loads(line) for line in lines]
+        posts = [json.loads(line) for line in lines]
+
+        # タイムスタンプを日本時間に変換
+        for post in posts:
+            timestamp = datetime.strptime(post['timestamp'], "%Y-%m-%d %H:%M:%S")
+            post['timestamp'] = timestamp.astimezone(pytz.timezone("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S")
+
+        return posts
 
 def main():
     st.title("掲示板アプリ")
 
     # 新規投稿の入力
-    new_post_title = st.text_input("タイトル")
     new_post_content = st.text_area("新規投稿", height=100)
-
+    new_post_title = st.text_input("ページ")
+    
     # 投稿ボタンが押された場合
     if st.button("投稿する") and new_post_title and new_post_content:
         new_post_title, new_post_content = check_post_content(new_post_title, new_post_content)
@@ -54,9 +61,10 @@ def main():
     else:
         for post in posts:
             # 各タイトルにリンクを付けて表示
-            post_url = f"[{post['title']}](#{urllib.parse.quote(post['title'])})"
-            st.markdown(post_url, unsafe_allow_html=True)
+            post_url = f"<a href='https://maichan-bord-{urllib.parse.quote(post['title'])}.streamlit.app'>{post['title']}</a>"
             st.write(post['content'])
+            st.write("投稿時間:", post['timestamp'])  # タイムスタンプを表示
+            st.markdown(post_url, unsafe_allow_html=True)
             st.markdown("---")
 
 if __name__ == "__main__":
