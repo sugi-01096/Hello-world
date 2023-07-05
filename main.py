@@ -42,7 +42,7 @@ def main():
     st.title("掲示板アプリ")
 
     # 新規投稿の入力
-    new_post_content = st.text_area("新規投稿", height=100)
+    new_post_content = st.text_area("管理者以外記述厳禁", height=100)
     new_post_title = st.text_input("ページ")
     
     # 投稿ボタンが押された場合
